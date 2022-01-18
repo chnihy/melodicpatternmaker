@@ -23,10 +23,10 @@ It also supports creating rhythmic grids to help work on combining subdivisions.
 - Both are included in the venv, to run mpm from the venv, cd to mpm directory and enter
    $ source ./mpm_venv/bin/activate
 - To install requirements yourself:
-- pip3 install kivy
-- pip3 install scamp
-- pip3 install abjad
-- brew install lilypond
+$ pip3 install kivy
+$ pip3 install scamp
+$ pip3 install abjad
+$ brew install lilypond
 
 # How to Install and Run Melodic Pattern Maker
 1. Download as zip
