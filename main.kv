@@ -1,0 +1,376 @@
+#: import r random
+# Main.kv layout and design for main.py interface
+
+#### MainLayout 
+<MainLayout>:
+    orientation: 'vertical'
+	canvas:
+		Color:
+			rgba: .75,.75,1,.5
+		Rectangle:
+			size: self.size
+			pos:self.pos
+
+# Grid for all modules
+<ModulesLayout@GridLayout>:
+	cols: 3
+	rows: 2
+	padding: 50
+	spacing: 20
+
+# Module Layout
+# Modules hold Title and Panels
+<Module>:
+	orientation:'vertical'
+
+# Panel Layout
+# Panels hold name of input and input entry
+<Panel>:
+	orientation:'horizontal'
+	canvas:
+		Color:
+			rgba: 0,0,0,.5
+		Rectangle:
+			size: self.size
+			pos:self.pos
+
+# Style settings
+<AppTitle@Label>:
+    font_size: 65
+    size_hint: 1, None
+    height: 100
+    color: 1,1,1,1
+    canvas.before:
+		Color:
+			rgba: 0,0,0,.75
+		Rectangle:
+			size: self.size
+			pos:self.pos
+
+<ModuleTitle@Label>:
+	font_size: 30
+	size_hint: 1, None
+	height: 100
+	color: 1,1,1,1
+	canvas.before:
+		Color:
+			rgba: ([r.random() for x in range(3)] + [.5])
+		Rectangle:
+			size: self.size
+			pos:self.pos
+
+<PanelTitle@Label>:
+	font_size: 25
+    color: 1,1,1,1
+    canvas.before:
+		Color:
+			rgba: 0,0,0,.5
+		Rectangle:
+			size: self.size
+			pos:self.pos
+
+<TextInput>:
+	multiline: False
+	cursor_blink: True
+	font_size: 30
+	halign: 'center'
+
+
+# Drop Down Menus
+<Spinner>:
+	font_size: 20
+
+<RootList>:
+	text: 'C'
+	values: self.rootlist
+
+<KeySignatures>:
+	text: "C major"
+	values: self.key_signatures
+
+<RhythmList>:
+	text: "sixteenth"
+	values: self.rhythmlist
+
+<ScaleList>:
+	text: "major"
+	values: self.scalelist
+
+<DirectionList@Spinner>:
+	text: "up"
+	values: "up","down","both"
+
+<GridMotion@BoxLayout>:
+	orientation: 'horizontal'
+
+
+# Empty classes
+<Time>:
+<Scale>:
+<Pattern>:
+<Title>:
+<Direction>:
+<Grid>:
+
+
+
+
+#### ---------- The App Itself ---------- ####
+<MainLayout>:
+	
+	#### ------ Title Bar ------####
+    AppTitle:
+        text: "Melodic Pattern Maker"
+
+	# Modules Grid
+	ModulesLayout:
+
+		# Time Module
+		Time:
+			id: time
+
+			ModuleTitle:
+				text: "Time"
+			
+			# Tempo
+			Panel:
+				id: tempo
+				orientation:'horizontal'
+				PanelTitle:
+					text:'Tempo'
+				TextInput:
+					id: tempo_selection
+					text: "120"
+					padding:0,40,0,0
+					hint_text: "120"
+					input_filter: 'float'
+					on_text: time.set_tempo(self.text)
+
+			
+			# Time Signature
+			Panel:
+				id: time_sig
+				orientation:'horizontal'
+				
+				PanelTitle:
+					text:'Time Sig'
+			
+				Panel:
+					orientation:'vertical'
+					
+					# Beats input		
+					TextInput:
+						id: beats_selection
+						hint_text: "4"	
+						text: "4"
+						input_filter: 'int'
+						on_text: time.set_beats(self.text)
+					
+					# Beat Type selection
+					Spinner:
+						id: beattype_selection
+						text: "4"	
+						values: "4"
+						on_text: time.set_beattype(self.text)
+
+		ScaleModule:
+			id: scale_module
+			ModuleTitle:
+				text:'Scale'
+
+			# Key Signature
+			Panel:
+				orientation:'horizontal'
+				PanelTitle:
+					text:'Key Signature'
+				KeySignatures:
+					id: key_signature_selection
+					on_text: scale_module.set_key_signature(self.text)
+
+			
+			# Root
+			Panel:
+				orientation:'horizontal'
+				PanelTitle:
+					text:'Scale Root'
+				RootList:
+					id: scaleroot_selection
+					text: "C"
+					on_text: scale_module.set_root(self.text)
+					on_text: scale_module.set_flats_or_sharps(self.text)
+
+			
+			# Scale Type
+			Panel:
+				orientation:'horizontal'
+				PanelTitle:
+					text:'Scale Type'
+				ScaleList:
+					id: scaletype_selection
+					text: "major"
+					on_text: scale_module.set_scaletype(self.text)
+			
+			# Starting Note
+			Panel:
+				orientation:'horizontal'
+				PanelTitle:
+					text:'Start Note'
+				RootList:
+					id: startnote_selection
+					on_text: scale_module.set_startnote(self.text)
+
+		# Pattern Module
+		Pattern:
+			id: pattern
+			ModuleTitle:
+				text:'Pattern'
+			
+			# Pattern Entry
+			Panel:
+				orientation:'horizontal'
+				PanelTitle:
+					text:'Pattern'
+				TextInput:
+					id: pattern_selection
+					hint_text: '1234'
+					text: '1234'
+					padding: 0,40,0,0
+					input_filter: 'int'
+					on_text: pattern.set_pattern(self.text)
+
+			# Rhythm Entry
+			Panel:
+				orientation:'horizontal'
+				PanelTitle:
+					text:'Rhythm'
+				RhythmList:
+					id: a_rhythm_selection
+					on_text: pattern.set_a_rhythm(self.text)
+
+		# Direction Module
+		Direction:
+			id: direction
+			ModuleTitle:
+				text:'Direction'
+
+			# Measure Direction
+			Panel:
+				orientation:'horizontal'
+				PanelTitle:
+					text:'Measure Direction'
+				DirectionList:
+					id: scale_direction_selection
+					on_text: direction.set_measure_direction(self.text)
+
+			# Exercise Direction
+			Panel:
+				orientation:'horizontal'
+				PanelTitle:
+					text:'Exercise Direction'
+				Spinner:
+					id: exercise_scale_direction_selection
+					text: "up"
+					values: "up","down"
+					on_text: direction.set_exercise_direction(self.text)
+
+		# Grid Module
+		Grid:
+			id: grid
+			
+			BoxLayout:
+				orientation:'horizontal'
+				size_hint: 1, None
+				height: 100
+				canvas:
+					Color:
+						rgba: 0,0,0,.5
+					Rectangle:
+						size: self.size
+						pos:self.pos
+				ModuleTitle:
+					text:'Grid'
+				
+				# Grid selection switch
+				Switch:
+					id: grid_selection
+					active: False
+					on_active: grid.set_grid(self.active)
+
+			# B
+			Panel:
+				orientation:'horizontal'
+				PanelTitle:
+					text:'B Pattern'
+				
+				# B pattern
+				Panel:
+					orientation:'vertical'
+					TextInput:
+						id: grid_b_pattern_selection
+						text:"13"
+						hint_text: "13"
+						input_filter: 'int'
+						on_text: grid.set_b_pattern(self.text)
+					
+					# B Rhythm
+					RhythmList:
+						id: b_rhythm_selection
+						text: "eighth"
+						on_text: grid.set_b_rhythm(self.text)
+			
+			# Grid Scale Motion 
+			GridMotion:
+				canvas:
+					Color:
+						rgba: 0,0,0,.5
+					Rectangle:
+						size: self.size
+						pos:self.pos
+				
+				PanelTitle:
+					text: "Grid Motion"
+				
+				GridLayout:
+					size_hint: 1, None
+					cols: 2
+					rows: 2
+					
+					#### THIS IS WRONG WILL FIX LATER
+					Label:
+						id: grid_scale_motion_selection
+						text:'Stay'
+					Label:
+						text:'Follow'
+					CheckBox:
+						active: True
+						color: 1,1,1,1
+						group: "gridmotion"
+						on_active: grid.set_grid_scale_motion("stay")
+					CheckBox:
+						active: False
+						color: 1,1,1,1
+						group: "gridmotion"
+						on_active: grid.set_grid_scale_motion("follow")
+		
+		Title:
+			id: titlemodule
+			ModuleTitle:
+				text:'Title'
+				
+			# Entry for title
+			Panel:
+				orientation:'horizontal'
+				PanelTitle:
+					text:'Custom Title'
+				
+				TextInput:
+					id: title_entry
+					padding: 0, 40, 0, 0
+					text: "Default Title"
+					on_text: titlemodule.set_title(self.text)
+
+			# Run Button
+			Button:
+				text: "Run"
+				font_size: 40
+				on_release: root.run()
