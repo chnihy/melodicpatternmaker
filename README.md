@@ -1,5 +1,4 @@
 # melodicpatternmaker
-* In development *
 The Melodic Pattern Maker is part of a suite of apps for music education.  
 Built using Scamp and Kivy - it exports to XML files in LilyPond or MuseScore/Sibelius/Finale formats
 
