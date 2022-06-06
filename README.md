@@ -3,6 +3,8 @@
 Built using Scamp and Kivy, it exports to XML files in LilyPond or MuseScore/Sibelius/Finale formats.
 
 <img src="/static/preview.png">
+<img src="/static/preview2.png">
+
 
 MelodicPatternMaker creates scale pattern exercises based of a wide range of user input:
   * Key
