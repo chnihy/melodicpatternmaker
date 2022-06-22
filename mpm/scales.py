@@ -37,8 +37,8 @@ class __Scale__():
 			for i in range(len(self.scale)):
 				self.ranged_scale.append(self.scale[i] + str(r))
 
-	def assignMidiNums(self):
-		lowestMidiNums = {
+	def assign_midi_nums(self):
+		lowest_midi_nums = {
 						"sharps":{ 
 							'A': 21, 'A#': 22, 'B': 23, 'C': 24, 'C#': 25, 'D': 26, 
 							'D#': 27, 'E': 28, 'F': 29, 'F#': 30, 'G': 31, 'G#': 32
@@ -51,20 +51,20 @@ class __Scale__():
 		
 		# easier to read for humans
 		# ex: {"A1":21, "A#1":22, etc...
-		self.midiNumsDict = {}
+		self.midi_nums_dict = {}
 		for n in range(len(self.ranged_scale)):
 			note = self.ranged_scale[n]
 			theNote = note[:-1]
 			theRange = note[-1]
-			lowestMidiNumForNote = lowestMidiNums[self.flats_or_sharps][theNote]
-			self.midiNumsDict[note] = lowestMidiNumForNote + (int(theRange) * 12)
+			lowest_midi_nums_for_note = lowest_midi_nums[self.flats_or_sharps][theNote]
+			self.midi_nums_dict[note] = lowest_midi_nums_for_note + (int(theRange) * 12)
 		
-		self.midiNums = list(self.midiNumsDict.values())
+		self.midi_nums = list(self.midi_nums_dict.values())
 
 	def buildScale(self, range=8):
 		self.scale = [self.scale[interval] for interval in self.intervals]
 		self.rangify(range)
-		self.assignMidiNums()
+		self.assign_midi_nums()
 
 
 # Every class inherits from Chromatic
@@ -92,7 +92,7 @@ class Chromatic(__Scale__):
 				offset += 1  
 			
 		self.rangify(9)
-		self.assignMidiNums()	
+		self.assign_midi_nums()	
 		self.chromaticScale = [note for note in self.scale]
 
 

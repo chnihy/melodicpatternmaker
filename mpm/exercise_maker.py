@@ -3,6 +3,7 @@ from copy import copy
 
 #TODO Grid 
 #TODO 'both' directions
+#TODO Multiple Scales
 
 def note_group_maker(startnote, measure_scale):
 	"""Create a note group using a pattern key
@@ -72,7 +73,7 @@ def run():
 	"""
 	exercise_list = [] #clearing
 	start_note_index = config.ranged_scale.index(config.startnote) #first note of exercise
-	
+
 	for n in range(len(config.scale)):
 		measure_startnote = config.ranged_scale[start_note_index]
 		measure = measure_maker(measure_startnote)

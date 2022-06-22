@@ -1,17 +1,44 @@
 #controller.py
 from mpm import config
+from mpm.logging_ import logger
+from mpm.config import Rhythm
+
 import mpm.scales as scales
 import mpm.exercise_maker as exercise_maker
-import mpm.playback
-from mpm.config import Rhythm
+import mpm.playback as playback
+
+
+def get_all_notes(exercise_list):
+	lst = []
+	for m in exercise_list:
+		for ng in m:
+			for n in ng:
+				lst.append(n)
+	return lst
+
+def assign_midi_nums_for_exercise_list():
+	midi_nums_dict = config.scale_object.midi_nums_dict
+	config.exercise_list_midi_nums = [midi_nums_dict[note] for note in get_all_notes(config.exercise_list)]
+	
+	logger.debug('config.exercise_list_midi_nums: {}'.format(config.exercise_list_midi_nums))
 
 def build_scale_obj():
 	config.scale_object = scales.__getattribute__(config.scaletype)(config.root)
+	config.scale = config.scale_object.scale
+	config.ranged_scale = config.scale_object.ranged_scale
+	
+	#logger.debug('scale: {}'.format(config.scale))
+	#logger.debug('ranged_scale: {}'.format(config.ranged_scale))
 
 def run():
 	build_scale_obj()
+	set_startnote("C")
 	config.exercise_list = exercise_maker.run()
+	assign_midi_nums_for_exercise_list()
 	playback.play()
+	
+	#logger.debug('scale_object: {}'.format(config.scale_object))
+	logger.debug('Exercise List: {}'.format(config.exercise_list))	
 
 # Time
 def set_tempo(tempo):
@@ -31,13 +58,7 @@ def set_beat_type(beat_type):
 
 #Scales
 def get_scaletype_list():
-	scales_dir = list(scales.__dir__())
-	scaletype_list=[]
-	for i in scales_dir:
-		if "__" in i:
-			pass
-		else:
-			scaletype_list.append(i)
+	scaletype_list = [i for i in (scales.__dir__()) if "__" not in i]
 	return scaletype_list
 
 def get_key_signatures():

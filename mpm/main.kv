@@ -174,7 +174,7 @@
 						on_text: time.beat_type(self.text)
 
 		ScaleModule:
-			id: scale_module
+			id: scalemodule
 			ModuleTitle:
 				text:'Scale'
 
@@ -185,7 +185,7 @@
 					text:'Key Signature'
 				KeySignatures:
 					id: key_signature_selection
-					on_text: scale_module.key_signature(self.text)
+					on_text: scalemodule.key_signature(self.text)
 
 			
 			# Root
@@ -205,7 +205,7 @@
 				orientation:'horizontal'
 				PanelTitle:
 					text:'Scale Type'
-				ScaleList:
+				ScaleTypeList:
 					id: scaletype_selection
 					text: "major"
 					on_text: scalemodule.scaletype(self.text)

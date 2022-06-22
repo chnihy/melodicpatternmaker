@@ -94,6 +94,7 @@ class MainApp(App):
 	def build(self):
 		self.title = "Melodic Pattern Maker App"
 		return MainLayout()
-
+'''
 if __name__ == "__main__":
 	MainApp().run()
+'''
