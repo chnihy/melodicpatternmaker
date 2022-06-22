@@ -30,7 +30,7 @@ pip3 install -r requirements.txt
 python3 main.py
 ```
 
-- [ ] o Install requirements manually:
+#### To Install requirements manually instead:
 ```bash
 $ pip3 install kivy
 $ pip3 install scamp
@@ -47,4 +47,5 @@ $ brew install lilypond
 - [ ] Support for odd time signatures
 - [ ] Support for multiple scales in one exercise
 - [ ] Interactive playback/integrated midi display
+- [ ] Add multiple grid type support - the grid is currently hard coded
 

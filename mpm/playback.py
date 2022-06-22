@@ -2,9 +2,8 @@
 # playback - a module for playing and transcribing midi using SCAMP
 
 from scamp import Session
-from scales import midi_nums
-from melodic_pattern_maker import grid_guide
-import config
+from mpm import config
+#from melodic_pattern_maker import grid_guide
 
 
 def play(): 
@@ -36,11 +35,11 @@ def play():
 	else:
 		selection = "sharps"
 
-	# Setting final note
+	'''	# Setting final note
 	first_note = config.exercise_list[0][0][0]
 	last_note_range = int(config.exercise_list[-1][0][0][-1])
 	final_note = first_note[:-1] + str(last_note_range + 1)
-	final_note_midi_num = midi_nums[selection][final_note]
+	final_note_midi_num = midi_nums[selection][final_note]'''
 
 
 	# Playback and transcription
@@ -62,22 +61,11 @@ def play():
 
 				else:
 					piano.play_note(note_num, 1, a_rhythm_num, f"key: {config.key_signature}")
-	
-	piano.play_note(final_note_midi_num,1,1)
-	
-	# Printings Score
+	#piano.play_note(final_note_midi_num,1,1)
 	performance = s.stop_transcribing()
 
-	# TODO Max divisor ensures that weird subdivisions don't get printed
-	divisor_nums = {"quarter": 1,
-					"eighth": 2,
-					"triplet": 3,
-					"sixteenth": 4,
-					"16th triplet": 6,
-					"thirty second": 8}
-
 	# Final print out 
-	# .show() will print in lilypond || .show_xml() will print in MuseScore
+	# <.show() will print in lilypond, .show_xml() will print in MuseScore
 	performance.to_score(title = config.title, 
 						composer = None, 
 						time_signature=f"{config.beats}/{config.beattype}").show_xml()
