@@ -30,6 +30,41 @@ pip3 install -r requirements.txt
 python3 app.py
 ```
 
+## Project Design
+The biggest change in the refactor is converting the entire project to an MVC architecture.
+
+While changes will be made, and more structure will be added in the future, the general divisions
+can be considered as follows.
+
+### The Model:
+config.py, notes.py, scales.py
+
+### The View:
+main.py, main.ky
+
+### The Controller:
+controller.py, playback.py
+
+```
+.
+├── README.md
+├── app.py
+├── file.log
+├── issues.md
+├── mpm
+│   ├── __init__.py
+│   ├── config.py
+│   ├── controller.py
+│   ├── exercise_maker.py
+│   ├── logging_.py
+│   ├── main.kv
+│   ├── main.py
+│   ├── notes.py
+│   ├── playback.py
+│   └── scales.py
+└── requirements.txt
+```
+
 ## Todo
 - [ ] Add testing
 - [ ] Prettier UI
