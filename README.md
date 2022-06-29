@@ -43,7 +43,7 @@ config.py, notes.py, scales.py
 main.py, main.ky
 
 ### The Controller:
-controller.py, playback.py
+controller.py, playback.py, exercise_maker.py
 
 ```
 .
