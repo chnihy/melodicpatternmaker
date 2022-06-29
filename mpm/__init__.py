@@ -2,7 +2,9 @@ from mpm.config import Config
 
 config = Config()
 
-#import mpm.controller as controller
 from mpm.main import MainApp
+from mpm.controller import set_default_values
+
+set_default_values()
 MainApp().run()
-#import mpm.controller
+

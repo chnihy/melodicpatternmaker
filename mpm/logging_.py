@@ -9,7 +9,7 @@ logger.setLevel(logging.DEBUG)
 c_handler = logging.StreamHandler()
 f_handler = logging.FileHandler('./file.log')
 c_handler.setLevel(logging.DEBUG)
-f_handler.setLevel(logging.DEBUG)
+f_handler.setLevel(logging.INFO)
 
 # Create formatters and add it to handlers
 c_format = logging.Formatter('%(module)s - %(levelname)s - %(message)s')

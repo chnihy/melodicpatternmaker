@@ -1,3 +1,7 @@
+from mpm.logging_ import logger
+from mpm.config import Midi
+from mpm.notes import Notes
+
 class __Scale__():
 	"""Return a Scale class object,
 	should not be called by users
@@ -8,92 +12,67 @@ class __Scale__():
 	"""
 	
 	def __init__(self, key):
-		self.key = key.upper()
-		self.allnotes = ["A","Bb","B","C","Db",
-						"D","Eb","E","F","Gb",
-						"G","Ab","A#","B","C",
-						"C#","D","D#","E","F",
-						"F#","G","G#"]
-
-		# raw chromatic note sets
-		flatsRawScale = ["A","Bb","B","C","Db","D","Eb","E","F","Gb","G","Ab"]
-		sharpsRawScale = ["A","A#","B","C","C#","D","D#","E","F","F#","G","G#"]
+		self.key = key.capitalize()
 		
 		# Flats key or Sharp Key?
-		if self.key in ["C","F","Bb","Eb","Ab","Db","Gb"]:
+		if self.key in Notes().flats_raw_notes:
 			self.flats_or_sharps = "flats"
-			self.rawscale = flatsRawScale
+			self.raw_notes = Notes().flats_raw_notes
 		else:
 			self.flats_or_sharps = "sharps"
-			self.rawscale = sharpsRawScale
+			self.raw_notes = Notes().sharps_raw_notes
 
-		
-	
-	# Rangify adds a range note onto each note of the scale
-	# ex: C4, D4, E4, F4 etc...
-	def rangify(self, scale_range):
-		self.ranged_scale = [] #clearing
-		for r in range(scale_range):
-			for i in range(len(self.scale)):
-				self.ranged_scale.append(self.scale[i] + str(r))
+	def rangify(self):
+		self.ranged_scale = []
+		for ranged_note in Notes().all_notes_ranged[self.flats_or_sharps]:
+			if ranged_note[:-1] in self.scale:
+				self.ranged_scale.append(ranged_note)
 
-	def assign_midi_nums(self):
-		lowest_midi_nums = {
-						"sharps":{ 
-							'A': 21, 'A#': 22, 'B': 23, 'C': 24, 'C#': 25, 'D': 26, 
-							'D#': 27, 'E': 28, 'F': 29, 'F#': 30, 'G': 31, 'G#': 32
-							},
-						"flats":{ 
-							'A': 21, 'Bb': 22, 'B': 23, 'C': 24, 'Db': 25, 'D': 26, 
-							'Eb': 27, 'E': 28, 'F': 29, 'Gb': 30, 'G': 31, 'Ab': 32
-							}
-						}
-		
-		# easier to read for humans
-		# ex: {"A1":21, "A#1":22, etc...
-		self.midi_nums_dict = {}
-		for n in range(len(self.ranged_scale)):
-			note = self.ranged_scale[n]
-			theNote = note[:-1]
-			theRange = note[-1]
-			lowest_midi_nums_for_note = lowest_midi_nums[self.flats_or_sharps][theNote]
-			self.midi_nums_dict[note] = lowest_midi_nums_for_note + (int(theRange) * 12)
-		
-		self.midi_nums = list(self.midi_nums_dict.values())
+	def assign_midi_nums(self):		
+		self.midi_nums = {}
+		for n in self.ranged_scale:
+			self.midi_nums[n] = Midi().midi_nums[self.flats_or_sharps][n]
 
-	def buildScale(self, range=8):
+	def build_scale(self, range=8):
 		self.scale = [self.scale[interval] for interval in self.intervals]
-		self.rangify(range)
+		self.rangify()
 		self.assign_midi_nums()
+		logger.info('Ranged Scale: {}'.format(self.ranged_scale))
+		logger.info('__Scale__: midi_nums: {}'.format(self.midi_nums))
+		
 
 
 # Every class inherits from Chromatic
 class Chromatic(__Scale__):
 	"""Create a Chromatic scale object
+
+	The real function of subclassing all other scales
+	from the Chromatic scale (besides the fact that this
+	is how scales are created in music theory) is that 
+	Chromatic class sets the ORDER of the raw_scale.
+
+	In this sense, the raw_scale isn't really a scale at all,
+	it is just the notes in alphabetical order
 	
-	Keyword arguments:
-	argument -- description
-	Return: return_description
 	"""
 	
 	def __init__(self,key):
+		# Chromatic class sets the order of its inherited raw_scale 
+		# All children inherit their <scale> from the Chromtic <scale>
 		super().__init__(key)
-		keyIndex = self.rawscale.index(self.key)
+		key_index = self.raw_notes.index(self.key)
 		offset = 0
-		self.scale = []
 		
-		# Chromatic class sets the order of its inherited rawscale 
-		# All children inherit <scale> from the Chromtic <scale>
-		for i in range(len(self.rawscale)):
+		self.scale = []
+		for i in range(len(self.raw_notes)):
 			try:
-				self.scale.append(self.rawscale[keyIndex + i])
+				self.scale.append(self.raw_notes[key_index + i])
 			except IndexError:
-				self.scale.append(self.rawscale[0 + offset])
+				self.scale.append(self.raw_notes[0 + offset])
 				offset += 1  
-			
-		self.rangify(9)
-		self.assign_midi_nums()	
-		self.chromaticScale = [note for note in self.scale]
+
+		self.rangify()
+		self.assign_midi_nums()
 
 
 # Basic Scales #
@@ -101,29 +80,29 @@ class Major(Chromatic):
 	def __init__(self, key):
 		super().__init__(key)
 		self.intervals = [0, 2, 4, 5, 7, 9, 11]
-		self.buildScale()
+		self.build_scale()
 		
 class Minor(Chromatic):
 	def __init__(self, key):
 		super().__init__(key)
 		self.intervals = [0, 2, 3, 5, 7, 9, 10]
-		self.buildScale()	
+		self.build_scale()	
 
 class MelodicMinor(Chromatic):
 	def __init__(self, key):
 		super().__init__(key)
 		self.intervals = [0,2,3,5,7,8,11]
-		self.buildScale()
+		self.build_scale()
 
 # Penatonic Scales
 class MajorPentatonic(Chromatic):
 	def __init__(self, key):
 		super().__init__(key)
 		self.intervals = [0,2,4,7,9]
-		self.buildScale()
+		self.build_scale()
 
 class MinorPentatonic(Chromatic):
 	def __init__(self, key):
 		super().__init__(key)
 		self.intervals = [0,3,5,7,10]
-		self.buildScale()
+		self.build_scale()

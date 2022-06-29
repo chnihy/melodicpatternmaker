@@ -1,5 +1,6 @@
 from mpm import config
 from copy import copy
+from mpm.logging_ import logger
 
 #TODO Grid 
 #TODO 'both' directions
@@ -41,6 +42,7 @@ def measure_maker(startnote):
 	for beat in range(config.beats):
 		while True:
 			note_group_startnote = measure_scale[start_note_index]
+			#logger.info('Measure Maker: note_group_startnote: {}'.format(note_group_startnote))
 			note_group = note_group_maker(note_group_startnote, measure_scale)
 			# Removing "edge repeats"
 			# "Edge repeats" means the same note of two noteGroups touching each other
@@ -76,6 +78,7 @@ def run():
 
 	for n in range(len(config.scale)):
 		measure_startnote = config.ranged_scale[start_note_index]
+		#logger.info('Run, measure_startnote: {}'.format(measure_startnote))
 		measure = measure_maker(measure_startnote)
 		exercise_list.append(measure)
 		start_note_index += 1

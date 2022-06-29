@@ -4,42 +4,42 @@ from mpm.logging_ import logger
 from mpm.config import Rhythm
 
 import mpm.scales as scales
+from mpm.notes import Notes
 import mpm.exercise_maker as exercise_maker
 import mpm.playback as playback
 
+def set_exercise_list_midi_nums():
 
-def get_all_notes(exercise_list):
-	lst = []
-	for m in exercise_list:
-		for ng in m:
-			for n in ng:
-				lst.append(n)
-	return lst
-
-def assign_midi_nums_for_exercise_list():
-	midi_nums_dict = config.scale_object.midi_nums_dict
-	config.exercise_list_midi_nums = [midi_nums_dict[note] for note in get_all_notes(config.exercise_list)]
+	def exercise_list_all_notes():
+		exercise_list_all_notes = []
+		for measure in config.exercise_list:
+			for chunk in measure:
+				for note in chunk:
+					exercise_list_all_notes.append(note)
+		return exercise_list_all_notes
 	
-	logger.debug('config.exercise_list_midi_nums: {}'.format(config.exercise_list_midi_nums))
+	exercise_list_all_notes = exercise_list_all_notes()
+	
+	config.exercise_list_midi_nums = [config.scale_object.midi_nums[note] for note in exercise_list_all_notes]
+
+	'''for note in exercise_list_all_notes:
+		config.exercise_list_midi_nums.append(config.scale_object.midi_nums[note])'''
 
 def build_scale_obj():
 	config.scale_object = scales.__getattribute__(config.scaletype)(config.root)
 	config.scale = config.scale_object.scale
 	config.ranged_scale = config.scale_object.ranged_scale
-	
-	#logger.debug('scale: {}'.format(config.scale))
-	#logger.debug('ranged_scale: {}'.format(config.ranged_scale))
 
 def run():
 	build_scale_obj()
-	set_startnote("C")
 	config.exercise_list = exercise_maker.run()
-	assign_midi_nums_for_exercise_list()
+	set_exercise_list_midi_nums()
 	playback.play()
-	
-	#logger.debug('scale_object: {}'.format(config.scale_object))
-	logger.debug('Exercise List: {}'.format(config.exercise_list))	
 
+
+
+
+## GETTERS AND SETTERS
 # Time
 def set_tempo(tempo):
 	if tempo == "":
@@ -57,21 +57,23 @@ def set_beat_type(beat_type):
 	config.beat_type = beat_type
 
 #Scales
+
 def get_scaletype_list():
 	scaletype_list = [i for i in (scales.__dir__()) if "__" not in i]
 	return scaletype_list
 
 def get_key_signatures():
-	return scales.__Scale__("C").allnotes
+	return ["C major"]
 
 def set_key_signature(key_signature):
 	config.key_signature = key_signature
 
 def get_roots():
-	return scales.__Scale__("C").allnotes
+	return Notes().allnotes
 
 def set_root(root):
 	config.root = root
+	logger.info("Controller::Set_Root::root = {}".format(root))
 
 def set_flats_or_sharps(selection):
 	flats = ["C","F","Bb","Eb","Ab","Db","Gb"]
@@ -81,7 +83,10 @@ def set_flats_or_sharps(selection):
 		config.flats = False
 
 def set_scaletype(scaletype):
-	config.scaletype = scaletype
+	if scaletype:
+		config.scaletype = scaletype
+	else:
+		config.scaletype = "Major"
 
 def set_startnote(startnote):
 	config.startnote = startnote + config.range_start
@@ -122,3 +127,37 @@ def set_grid_scale_motion(selection):
 def set_title(title):
 	config.title = title
 
+# Default values
+def set_default_values():
+	# Time
+	config.tempo = 120
+	config.beats = 4
+	config.beat_type = 4
+	# Scale/Key
+	config.range = 8
+	config.key_signature = "C major"
+	config.root = "C"
+	config.flats = True
+	config.scaletype = "Major"
+	config.startnote = "C3"
+	config.range_start = "3"
+	config.clef = "treble"
+	# Pattern/Rhythm
+	config.pattern = [1,2,3,4]
+	config.a_rhythm = "sixteenth"
+	# Directions
+	config.directions = {"measure": "up","exercise": "up"}
+	# Grid
+	config.grid = False
+	config.b_pattern = None
+	config.b_rhythm = None
+	config.grid_scale_motion = None
+	config.title = "Default Title"
+'''
+def log_config():
+	# create log for all config attributes
+	for i in config.__dir__():
+		if "__" in i:
+			pass
+		else:
+			logger.info('config.{}: {}'.format(i, config.__getattribute__(i)))'''

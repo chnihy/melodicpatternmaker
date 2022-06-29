@@ -13,7 +13,7 @@ MelodicPatternMaker creates scale pattern exercises based of a wide range of use
   * Rhythm
   * Pattern (ex 1234)
 
-It also supports creating rhythmic grids to help work on combining subdivisions. There are a lot of possibilities with all of the various modifiers!
+It also supports creating rhythmic grids to help work on combining subdivisions. There are a lot of possibilities with all of the various modifiers! GRIDS ARE NOT CURRENTLY FUNCTIONAL, will be again soon!
 
 ## How to install and run
 ### Clone Repo
@@ -25,27 +25,49 @@ cd melodicpatternmaker
 ```bash
 pip3 install -r requirements.txt
 ```
-### Launch main.py
+### Launch app.py
 ```bash
-python3 main.py
-```
-
-#### To Install requirements manually instead:
-```bash
-$ pip3 install kivy
-$ pip3 install scamp
-$ pip3 install abjad
-$ brew install lilypond
+python3 app.py
 ```
 
 ## Todo
-- [ ] Add logging
 - [ ] Add testing
-- [ ] <code>starting_note_list</code> needs to update when scale is changed
 - [ ] Prettier UI
 - [ ] Support for more scales including modes, altered, diminsihed etc...
 - [ ] Support for odd time signatures
 - [ ] Support for multiple scales in one exercise
 - [ ] Interactive playback/integrated midi display
-- [ ] Add multiple grid type support - the grid is currently hard coded
+- [ ] Add grid support - Currently disabled 
+
+
+# ISSUES
+
+## C-Indexing
+See notes.py for a concrete example of this issue.
+
+The primary issue with applying range numbers to a musical scale is 
+the 'C-indexed' nature of scales.  Octaves begin on C not on A, so 
+we wind up with issues like this:
+
+Cmajor scale:
+[C0, D0, E0, F0, G0, A0, B0]
+
+Aminor Scale
+[A-1, B-1, C0, D0, E0, F0, G0]
+
+This means that at certain times we need to know wether our starting note is bellow 
+C or above it - this could likely be solved with some clever Exceptions and error handling.
+But for now I've chosen the ugly, blunt approach of storing all our ranged notes in notes.py
+
+
+## Key Signatures
+SCAMP does NOT currently support key signatures.  
+See the issue <a href="https://scampsters.marcevanstein.com/t/key-signature">here</a>.  This is
+obviously a semi-big problem for the future of my app, and most likely means a different type of 
+XML generation module will be required.
+
+I've added an older version of xmlwriter.py to my github from an early mpm prototype.
+It uses <a href="https://lxml.de/">LXML</a> to custom print our MusicXMl files and will be integrated to replace
+SCAMP in the next update.
+
 
