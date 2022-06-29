@@ -1,6 +1,6 @@
-from mpm.logging_ import logger
-from mpm.config import Midi
-from mpm.notes import Notes
+from mpm.config import __Midi__
+from mpm.notes import __Notes__
+
 
 class __Scale__():
 	"""Return a Scale class object,
@@ -13,32 +13,29 @@ class __Scale__():
 	
 	def __init__(self, key):
 		self.key = key.capitalize()
-		
 		# Flats key or Sharp Key?
-		if self.key in Notes().flats_raw_notes:
+		if self.key in __Notes__().flats_raw_notes:
 			self.flats_or_sharps = "flats"
-			self.raw_notes = Notes().flats_raw_notes
+			self.raw_notes = __Notes__().flats_raw_notes
 		else:
 			self.flats_or_sharps = "sharps"
-			self.raw_notes = Notes().sharps_raw_notes
+			self.raw_notes = __Notes__().sharps_raw_notes
 
 	def rangify(self):
 		self.ranged_scale = []
-		for ranged_note in Notes().all_notes_ranged[self.flats_or_sharps]:
+		for ranged_note in __Notes__().all_notes_ranged[self.flats_or_sharps]:
 			if ranged_note[:-1] in self.scale:
 				self.ranged_scale.append(ranged_note)
 
 	def assign_midi_nums(self):		
 		self.midi_nums = {}
 		for n in self.ranged_scale:
-			self.midi_nums[n] = Midi().midi_nums[self.flats_or_sharps][n]
+			self.midi_nums[n] = __Midi__().midi_nums[self.flats_or_sharps][n]
 
 	def build_scale(self, range=8):
 		self.scale = [self.scale[interval] for interval in self.intervals]
 		self.rangify()
 		self.assign_midi_nums()
-		logger.info('Ranged Scale: {}'.format(self.ranged_scale))
-		logger.info('__Scale__: midi_nums: {}'.format(self.midi_nums))
 		
 
 

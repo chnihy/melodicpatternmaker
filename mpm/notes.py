@@ -1,4 +1,4 @@
-class Notes():
+class __Notes__():
 	"""The reason for storing all ranged notes in a class
 	instead of dynamically creating a ranged scale is because of
 	the 'C-indexed' nature of musical scales.  

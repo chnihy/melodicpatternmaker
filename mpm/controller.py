@@ -4,7 +4,7 @@ from mpm.logging_ import logger
 from mpm.config import Rhythm
 
 import mpm.scales as scales
-from mpm.notes import Notes
+from mpm.notes import __Notes__
 import mpm.exercise_maker as exercise_maker
 import mpm.playback as playback
 
@@ -69,7 +69,7 @@ def set_key_signature(key_signature):
 	config.key_signature = key_signature
 
 def get_roots():
-	return Notes().allnotes
+	return __Notes__().allnotes
 
 def set_root(root):
 	config.root = root

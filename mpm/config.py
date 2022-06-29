@@ -60,7 +60,7 @@ class Rhythm():
 					"triplet": float(1/3), 
 					"sixteenth triplet": float(1/6)}
 
-class Midi():
+class __Midi__():
 	def __init__(self):
 		self.midi_nums = {'flats': 
 		{'A-1': 21, 'Bb-1': 22, 'B-1': 23, 
