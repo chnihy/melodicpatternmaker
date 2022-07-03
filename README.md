@@ -2,7 +2,7 @@
 #### The Melodic Pattern Maker (mpm for short) is part of a suite of apps for music education.  
 Built using Scamp and Kivy, it exports to XML files in LilyPond or MuseScore/Sibelius/Finale formats.
 
-Work in progress - see <a href="./mpm/ISSUES.md">Issues</a>
+Work in progress - see <a href="./ISSUES.md">Issues</a>
 
 <img src="/images/preview.png">
 <img src="/images/preview2.png">
@@ -77,33 +77,6 @@ controller.py, playback.py, exercise_maker.py
 
 
 # ISSUES
-
-## C-Indexing
-See notes.py for a concrete example of this issue.
-
-The primary issue with applying range numbers to a musical scale is 
-the 'C-indexed' nature of scales.  Octaves begin on C not on A, so 
-we wind up with issues like this:
-
-Cmajor scale:
-[C0, D0, E0, F0, G0, A0, B0]
-
-Aminor Scale
-[A-1, B-1, C0, D0, E0, F0, G0]
-
-This means that at certain times we need to know wether our starting note is bellow 
-C or above it - this could likely be solved with some clever Exceptions and error handling.
-But for now I've chosen the ugly, blunt approach of storing all our ranged notes in notes.py
-
-
-## Key Signatures
-SCAMP does NOT currently support key signatures.  
-See the issue <a href="https://scampsters.marcevanstein.com/t/key-signature">here</a>.  This is
-obviously a semi-big problem for the future of my app, and most likely means a different type of 
-XML generation module will be required.
-
-I've added an older version of xmlwriter.py to my github from an early mpm prototype.
-It uses <a href="https://lxml.de/">LXML</a> to custom print our MusicXMl files and will be integrated to replace
-SCAMP in the next update.
+see <a href="./ISSUES.md">Issues</a>
 
 
