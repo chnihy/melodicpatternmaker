@@ -6,7 +6,7 @@ from mpm.config import Rhythm
 import mpm.scales as scales
 from mpm.notes import __Notes__
 import mpm.exercise_maker as exercise_maker
-import mpm.playback as playback
+import mpm.transcribe as transcribe
 
 def set_exercise_list_midi_nums():
 
@@ -34,7 +34,7 @@ def run():
 	build_scale_obj()
 	config.exercise_list = exercise_maker.run()
 	set_exercise_list_midi_nums()
-	playback.play()
+	transcribe.run()
 
 
 
@@ -73,7 +73,7 @@ def get_roots():
 
 def set_root(root):
 	config.root = root
-	logger.info("Controller::Set_Root::root = {}".format(root))
+	#logger.info("Controller::Set_Root::root = {}".format(root))
 
 def set_flats_or_sharps(selection):
 	flats = ["C","F","Bb","Eb","Ab","Db","Gb"]
@@ -124,7 +124,11 @@ def set_b_rhythm(b_rhythm):
 def set_grid_scale_motion(selection):
 	config.grid_scale_motion = selection
 
-def set_title(title):
+def set_title(title): #see issuse
+	'''pattern = "" 
+	for i in config.pattern:
+		pattern += str(i)
+	config.title = "{}'s in {} {} ".format(pattern, config.root, config.scaletype, )'''
 	config.title = title
 
 # Default values

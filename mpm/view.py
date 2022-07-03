@@ -90,7 +90,7 @@ class MainLayout(BoxLayout):
 			self.run()
 
 #################
-class MainApp(App):
+class ViewApp(App):
 	def build(self):
 		self.title = "Melodic Pattern Maker App"
 		return MainLayout()

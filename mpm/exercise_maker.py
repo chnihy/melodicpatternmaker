@@ -1,3 +1,4 @@
+# exercisemaker.py
 from mpm import config
 from copy import copy
 from mpm.logging_ import logger
@@ -73,8 +74,8 @@ def run():
 	Keyword arguments: None
 	Return: exercise_list
 	"""
-	exercise_list = [] #clearing
-	start_note_index = config.ranged_scale.index(config.startnote) #first note of exercise
+	exercise_list = []
+	start_note_index = config.ranged_scale.index(config.startnote) #first note of entire exercise
 
 	for n in range(len(config.scale)):
 		measure_startnote = config.ranged_scale[start_note_index]

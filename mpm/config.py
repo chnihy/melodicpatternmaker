@@ -41,8 +41,9 @@ class Config():
 
 	@property
 	def exercise_list(self):
-		for i in self._exercise_list:
-			print(i)
+		#if you want to print/log the exlist:
+		"""for i in self._exercise_list: 
+			print(i)"""
 		return self._exercise_list
 			
 	@exercise_list.setter

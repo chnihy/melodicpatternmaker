@@ -1,5 +1,4 @@
-#python3
-# playback - a module for playing and transcribing midi using SCAMP
+# playback.py
 
 from scamp import Session
 from mpm import config
@@ -8,8 +7,7 @@ from mpm.logging_ import logger
 #from melodic_pattern_maker import grid_guide
 
 
-def play(): 
-	# Creating session and parts
+def run(): 
 	s = Session()
 	s.fast_forward_to_beat(500) # This makes it NOT play any sound
 	s.tempo = config.tempo
@@ -17,10 +15,8 @@ def play():
 	piano.clef_preference = config.clef.lower()
 	rhythm_nums = Rhythm().rhythm_nums	
 
-	# Transcribing
 	s.start_transcribing()		
 
-	# Rhythm
 	a_rhythm_num = rhythm_nums[config.a_rhythm]
 	if config.b_rhythm != None:
 		b_rhythm_num = rhythm_nums[config.b_rhythm]
@@ -49,7 +45,7 @@ def play():
 	performance = s.stop_transcribing()
 
 	# Final print out 
-	# <.show() will print in lilypond, .show_xml() will print in MuseScore
+	# show() will print in lilypond, show_xml() will print in MuseScore
 	performance.to_score(title = config.title, 
 						composer = None, 
 						time_signature=f"{config.beats}/{config.beat_type}").show_xml()

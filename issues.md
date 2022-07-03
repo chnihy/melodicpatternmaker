@@ -28,3 +28,16 @@ I've added an older version of xmlwriter.py to my github from an early mpm proto
 It uses <a href="https://lxml.de/">LXML</a> to custom print our MusicXMl files and will be integrated to replace
 SCAMP in the next update.
 
+## Set default title 
+Work in progress: the title should update automatically as the exercise is modified - but it should also be 
+open to modification by the user in the title input form
+
+## Grid Functionality
+Restore grid functionality
+
+## Scale/Exercise Direction
+Restore 'both' directionality to measurea and exercise
+Restore 'down' directionality to exercise
+
+## Final Note
+Restore 'final note' functionality to playback
