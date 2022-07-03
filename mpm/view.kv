@@ -92,9 +92,9 @@
 	text: "sixteenth"
 	values: self.rhythmlist
 
-<ScaleList>:
+<ScaleTypeList>:
 	text: "major"
-	values: self.scalelist
+	values: self.scaletype_list
 
 <DirectionList@Spinner>:
 	text: "up"
@@ -144,7 +144,7 @@
 					padding:0,40,0,0
 					hint_text: "120"
 					input_filter: 'float'
-					on_text: time.set_tempo(self.text)
+					on_text: time.tempo(self.text)
 
 			
 			# Time Signature
@@ -164,17 +164,17 @@
 						hint_text: "4"	
 						text: "4"
 						input_filter: 'int'
-						on_text: time.set_beats(self.text)
+						on_text: time.beats(self.text)
 					
 					# Beat Type selection
 					Spinner:
-						id: beattype_selection
+						id: beat_type_selection
 						text: "4"	
 						values: "4"
-						on_text: time.set_beattype(self.text)
+						on_text: time.beat_type(self.text)
 
 		ScaleModule:
-			id: scale_module
+			id: scalemodule
 			ModuleTitle:
 				text:'Scale'
 
@@ -185,7 +185,7 @@
 					text:'Key Signature'
 				KeySignatures:
 					id: key_signature_selection
-					on_text: scale_module.set_key_signature(self.text)
+					on_text: scalemodule.key_signature(self.text)
 
 			
 			# Root
@@ -196,8 +196,8 @@
 				RootList:
 					id: scaleroot_selection
 					text: "C"
-					on_text: scale_module.set_root(self.text)
-					on_text: scale_module.set_flats_or_sharps(self.text)
+					on_text: scalemodule.root(self.text)
+					on_text: scalemodule.flats_or_sharps(self.text)
 
 			
 			# Scale Type
@@ -205,10 +205,10 @@
 				orientation:'horizontal'
 				PanelTitle:
 					text:'Scale Type'
-				ScaleList:
+				ScaleTypeList:
 					id: scaletype_selection
 					text: "major"
-					on_text: scale_module.set_scaletype(self.text)
+					on_text: scalemodule.scaletype(self.text)
 			
 			# Starting Note
 			Panel:
@@ -217,7 +217,7 @@
 					text:'Start Note'
 				RootList:
 					id: startnote_selection
-					on_text: scale_module.set_startnote(self.text)
+					on_text: scalemodule.startnote(self.text)
 
 		# Pattern Module
 		Pattern:
@@ -236,7 +236,7 @@
 					text: '1234'
 					padding: 0,40,0,0
 					input_filter: 'int'
-					on_text: pattern.set_pattern(self.text)
+					on_text: pattern.pattern(self.text)
 
 			# Rhythm Entry
 			Panel:
@@ -245,7 +245,7 @@
 					text:'Rhythm'
 				RhythmList:
 					id: a_rhythm_selection
-					on_text: pattern.set_a_rhythm(self.text)
+					on_text: pattern.a_rhythm(self.text)
 
 		# Direction Module
 		Direction:
@@ -260,7 +260,7 @@
 					text:'Measure Direction'
 				DirectionList:
 					id: scale_direction_selection
-					on_text: direction.set_measure_direction(self.text)
+					on_text: direction.measure_direction(self.text)
 
 			# Exercise Direction
 			Panel:
@@ -271,7 +271,7 @@
 					id: exercise_scale_direction_selection
 					text: "up"
 					values: "up","down"
-					on_text: direction.set_exercise_direction(self.text)
+					on_text: direction.exercise_direction(self.text)
 
 		# Grid Module
 		Grid:
@@ -294,7 +294,7 @@
 				Switch:
 					id: grid_selection
 					active: False
-					on_active: grid.set_grid(self.active)
+					on_active: grid.grid(self.active)
 
 			# B
 			Panel:
@@ -310,13 +310,13 @@
 						text:"13"
 						hint_text: "13"
 						input_filter: 'int'
-						on_text: grid.set_b_pattern(self.text)
+						on_text: grid.b_pattern(self.text)
 					
 					# B Rhythm
 					RhythmList:
 						id: b_rhythm_selection
 						text: "eighth"
-						on_text: grid.set_b_rhythm(self.text)
+						on_text: grid.b_rhythm(self.text)
 			
 			# Grid Scale Motion 
 			GridMotion:
@@ -345,12 +345,12 @@
 						active: True
 						color: 1,1,1,1
 						group: "gridmotion"
-						on_active: grid.set_grid_scale_motion("stay")
+						on_active: grid.grid_scale_motion("stay")
 					CheckBox:
 						active: False
 						color: 1,1,1,1
 						group: "gridmotion"
-						on_active: grid.set_grid_scale_motion("follow")
+						on_active: grid.grid_scale_motion("follow")
 		
 		Title:
 			id: titlemodule
@@ -367,7 +367,7 @@
 					id: title_entry
 					padding: 0, 40, 0, 0
 					text: "Default Title"
-					on_text: titlemodule.set_title(self.text)
+					on_text: titlemodule.title(self.text)
 
 			# Run Button
 			Button:
