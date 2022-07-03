@@ -3,6 +3,7 @@
 Built using Scamp and Kivy, it exports to XML files in LilyPond or MuseScore/Sibelius/Finale formats.
 
 Work in progress - see <a href="./issues.md">Issues</a>
+
 See project structure in the last <a href="https://github.com/chnihy/melodicpatternmaker/pull/2">pull request</a>
 
 <img src="/images/preview.png">
@@ -30,41 +31,6 @@ pip3 install -r requirements.txt
 ### Launch app.py
 ```bash
 python3 app.py
-```
-
-## Project Design
-The biggest change in the refactor is converting the entire project to an MVC architecture.
-
-While changes will be made, and more structure will be added in the future, the general divisions
-can be considered as follows.
-
-### The Model:
-config.py, notes.py, scales.py
-
-### The View:
-main.py, main.ky
-
-### The Controller:
-controller.py, playback.py, exercise_maker.py
-
-```
-.
-├── README.md
-├── app.py
-├── file.log
-├── issues.md
-├── mpm
-│   ├── __init__.py
-│   ├── config.py
-│   ├── controller.py
-│   ├── exercise_maker.py
-│   ├── logging_.py
-│   ├── view.kv
-│   ├── view.py
-│   ├── notes.py
-│   ├── transcribe.py
-│   └── scales.py
-└── requirements.txt
 ```
 
 ## Todo
