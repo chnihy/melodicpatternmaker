@@ -1,7 +1,7 @@
 # ISSUES
 
 ## C-Indexing
-See notes.py for a concrete example of this issue.
+See <a href="./mpm/notes.py">notes.py</a> for a concrete example of this issue.
 
 The primary issue with applying range numbers to a musical scale is 
 the 'C-indexed' nature of scales.  Octaves begin on C not on A, so 
