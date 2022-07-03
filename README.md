@@ -3,6 +3,7 @@
 Built using Scamp and Kivy, it exports to XML files in LilyPond or MuseScore/Sibelius/Finale formats.
 
 Work in progress - see <a href="./issues.md">Issues</a>
+See project structure in the last <a href="https://github.com/chnihy/melodicpatternmaker/pull/2">pull request</a>
 
 <img src="/images/preview.png">
 <img src="/images/preview2.png">
