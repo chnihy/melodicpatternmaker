@@ -1,4 +1,6 @@
-#main.py 
+# View.py - view does not handle data or methods, it passes data to 
+# the controller and calls the controller methods
+
 import kivy
 from kivy.app import App
 from kivy.uix.widget import Widget
@@ -8,7 +10,10 @@ from kivy.uix.spinner import Spinner
 from kivy.properties import ObjectProperty
 from kivy.core.window import Window
 
-import mpm.controller as controller
+# this might not work... if not, try:
+# from mpm.controller import Controller
+# controller = Controller()
+from mpm import controller
 
 Window.maximize()
 

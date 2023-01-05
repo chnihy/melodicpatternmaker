@@ -1,12 +1,13 @@
-#__init__.py
-
+# create a single instance of config to be imported by all other modules
+# like a Singleton...
 from mpm.config import Config
-
 config = Config()
 
-from mpm.view import ViewApp
-from mpm.controller import set_default_values
+# instantiate controller - calls the set_default_values() method
+from mpm.controller import Controller
+controller = Controller()
 
-set_default_values()
+# Instantiate viewer
+from mpm.view import ViewApp
 ViewApp().run()
 

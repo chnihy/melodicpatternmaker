@@ -1,8 +1,7 @@
 # playback.py
-
 from scamp import Session
 from mpm import config
-from mpm.config import Rhythm
+from mpm.rhythm import Rhythm
 from mpm.logging_ import logger
 #from melodic_pattern_maker import grid_guide
 
@@ -13,9 +12,9 @@ def run():
 	s.tempo = config.tempo
 	piano = s.new_part("piano")
 	piano.clef_preference = config.clef.lower()
-	rhythm_nums = Rhythm().rhythm_nums	
+	rhythm_nums = Rhythm.get_rhythm_nums()
 
-	s.start_transcribing()		
+	s.start_transcribing()
 
 	a_rhythm_num = rhythm_nums[config.a_rhythm]
 	if config.b_rhythm != None:
