@@ -2,7 +2,32 @@
 #### The Melodic Pattern Maker (mpm for short) is part of a suite of apps for music education.  
 Built using Scamp and Kivy, it exports to XML files in LilyPond or MuseScore/Sibelius/Finale formats.
 
-Work in progress - see <a href="./issues.md">Issues</a>
+Tree
+```
+.
+├── README.md
+├── app.py
+├── file.log
+├── images
+│   ├── preview.png
+│   └── preview2.png
+├── issues.md
+├── mpm
+│   ├── __init__.py
+│   ├── config.py
+│   ├── controller.py
+│   ├── exercise_maker.py
+│   ├── grid.py
+│   ├── logging_.py
+│   ├── midi.py
+│   ├── notes.py
+│   ├── rhythm.py
+│   ├── scales.py
+│   ├── transcribe.py
+│   ├── view.kv
+│   └── view.py
+└── requirements.txt
+```
 
 See project structure in the last <a href="https://github.com/chnihy/melodicpatternmaker/pull/2">pull request</a>
 
